@@ -1,0 +1,87 @@
+<head>
+  <title>Universal Clipboard</title>
+</head>
+
+<body>
+  <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Universal Clipboard</span>
+          <div class="mdl-layout-spacer"></div>
+          {{> loginButtons align="right"}}
+        </div>
+      </header>
+      <div class="demo-ribbon"></div>
+      <main class="demo-main mdl-layout__content">
+        <div class="demo-container mdl-grid">
+          {{#if currentUser}}
+            {{> afterLogIn}}
+          {{else}}
+            {{> beforeLogIn}}
+          {{/if}}
+        </div>
+        <footer class="demo-footer mdl-mini-footer">
+          <div class="mdl-mini-footer--left-section">
+            <ul class="mdl-mini-footer--link-list">
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Privacy and Terms</a></li>
+              <li><a href="#">User Agreement</a></li>
+            </ul>
+          </div>
+        </footer>
+      </main>
+    </div>
+</body>
+
+<template name="afterLogIn">
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+  <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+    <h3>Your Clipboard</h3>
+    <form id="new-snippet">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+        <textarea class="mdl-textfield__input" type="text" rows= "1" id="text" ></textarea>
+        <label class="mdl-textfield__label" for="text">Paste Snippet</label>
+      </div><br>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" id="save" align="right">
+        Save
+      </button>
+    </form><br><br>
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+      <tbody>
+        {{#each snippets}}
+          {{> snippet}}
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<template name="snippet">
+  <tr>
+      <td class="mdl-data-table__cell--non-numeric">{{text}}</td>
+      <td style="width:10px">
+        <button class="btn" data-clipboard-text="{{text}}">
+          <i class="mdi mdi-clipboard" id="clip{{this._id}}"></i>
+          <div class="mdl-tooltip" for="clip{{this._id}}">
+            <strong>Copy to Clipboard</strong>
+          </div>
+        </button>
+      </td>
+      <td style="width:10px">
+        <button class="delete">
+          <i class="mdi mdi-delete" id="del{{this._id}}"></i>
+          <div class="mdl-tooltip" for="del{{this._id}}">
+            <strong>delete</strong>
+          </div>
+        </button>
+      </td>
+  </tr>
+</template>
+
+<template name="beforeLogIn">
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+  <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+    <h3>Login to View your Snippets</h3>
+    <p align="center"><i class="mdi mdi-clipboard-text" style="font-size:200px;color:#3F51B5;"></i></p>
+  </div>
+</template>
